@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elzatona Nurse - الدخول</title>
+  <style>
+    /* Added Google Font link for 'Cairo' */
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #f1f4f8;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      direction: rtl; /* Ensure RTL direction */
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 35px 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+      box-sizing: border-box;
+      text-align: right; /* Align text to right */
+    }
+
+    h2 {
+        text-align: center; /* Center the heading */
+        color: #333;
+        margin-bottom: 25px;
+        font-family: 'Cairo', sans-serif; /* Ensure font */
+    }
+
+    input, button {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif; /* Ensure font in input/button */
+      text-align: right; /* Right align text in inputs */
+    }
+
+    /* Style placeholder text */
+    input::placeholder {
+        color: #999;
+        text-align: right;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease; /* Smoother transition */
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* Add loading indicator style */
+    button.loading {
+        background-color: #aaa; /* Grey background */
+        cursor: not-allowed; /* Indicate it's busy */
+    }
+    button.loading::after {
+        content: ' ...'; /* Add dots */
+    }
+
+    /* Message styles */
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 15px;
+      text-align: center;
+      min-height: 20px; /* Prevent layout shift */
+      word-wrap: break-word; /* Wrap long messages */
+      color: red; /* Default message color to red for errors */
+    }
+
+    .message.success {
+        color: green; /* Green for success messages */
+    }
+     .message.info {
+         color: #555; /* Dark grey for info messages */
+     }
+
+    /* Countdown Timer Style */
+    #countdown {
+        text-align: center;
+        margin: 20px 0; /* Space above and below */
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #007bff; /* Blue color for countdown */
+    }
+    #countdown.ended {
+        color: red; /* Red color when ended */
+    }
+
+
+    .info-box {
+      background: #e2f0e8; /* Light green background for a positive message */
+      color: #155724; /* Dark green text */
+      padding: 15px;
+      margin-top: 25px; /* Increased margin */
+      border: 1px solid #c3e6cb; /* Green border */
+      border-radius: 8px;
+      font-size: 15px;
+      text-align: right;
+    }
+
+     .info-box p {
+         margin-bottom: 10px; /* Spacing between paragraphs */
+     }
+
+     .info-box p:last-child {
+         /* No margin after the last paragraph IF it's the very last element */
+     }
+
+      /* Style for the list within info-box */
+      .info-box ul {
+        padding-right: 20px; /* Keep list indentation */
+        margin-top: 5px;
+        margin-bottom: 10px; /* Add space after list before next content */
+      }
+
+      .info-box li {
+        margin-bottom: 5px; /* Space between list items */
+      }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      input, button {
+        font-size: 15px;
+      }
+
+      .info-box {
+        font-size: 14px;
+      }
+       h2 {
+           font-size: 1.5em; /* Adjust heading size on smaller screens */
+       }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Elzatona Nurse</h2>
+    <input type="tel" id="phone" placeholder="رقم الموبايل (01xxxxxxxxx)">
+    <input type="text" id="code" placeholder="كود التفعيل (اختياري حالياً)">
+    <button id="loginButton" onclick="verifyAndRedirect()">تسجيل الدخول</button>
+    <div class="message" id="message"></div>
+
+    <div id="countdown"></div>
+
+    <div class="info-box">
+      <p>أهلاً بك في برنامج Elzatona Nurse المصمم خصيصاً لمساعدة طلاب <strong>كلية التمريض</strong> على الفهم والمذاكرة بطريقة سهلة وسريعة وباللغة العامية المصرية.</p>
+      <p><strong>العرض المجاني للتجربة متاح حالياً للجميع حتى تاريخ 30 أبريل 2025 الساعة 11:59 مساءً.</strong></p>
+      <p>بعد هذا التاريخ، سيتطلب استخدام النظام الحصول على كود تفعيل من خلال الاشتراك في إحدى الباقات المتاحة لمساعدتنا على تغطية مصاريف التشغيل وضمان استمرارية الخدمة وتطويرها:</p>
+            <ul>
+        <li>✅ شهر = <strong>100 جنيه</strong></li>
+        <li>✅ شهرين = <strong>150 جنيه</strong> (بدل 200)</li>
+        <li>✅ ثلاث شهور + شهر هدية (إجمالي 4 شهور) = <strong>200 جنيه</strong> (بدل 400)</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // --- Countdown Timer Logic ---
+    // Set the date we're counting down to (April 30, 2025, end of the day)
+    const endDate = new Date('2025-04-30T23:59:59').getTime();
+    const countdownElement = document.getElementById('countdown');
+    let timerInterval;
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = endDate - now;
+
+        if (distance < 0) {
+            clearInterval(timerInterval);
+            countdownElement.textContent = 'انتهى العرض المجاني.';
+            countdownElement.classList.add('ended'); // Add class for styling
+            // You might want to dynamically change the info box text here as well
+            // or just rely on the static text which is currently set to describe the period.
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = `الوقت المتبقي للعرض المجاني: <br> ${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+    }
+
+    // Update the countdown every 1 second
+    updateCountdown(); // Initial call to display immediately
+    timerInterval = setInterval(updateCountdown, 1000);
+
+
+    // --- Login Logic ---
+    async function verifyAndRedirect() {
+      const phoneInput = document.getElementById('phone');
+      const codeInput = document.getElementById('code');
+      const message = document.getElementById('message');
+      const loginButton = document.getElementById('loginButton');
+
+      const phone = phoneInput.value.trim();
+      // Keep code input value and convert to uppercase, backend will handle validation based on date
+      const code = codeInput.value.trim().toUpperCase();
+
+      // Reset message style
+      message.textContent = '';
+      message.className = 'message';
+
+      if (!phone) {
+        message.textContent = 'من فضلك املأ رقم الموبايل.';
+        return;
+      }
+
+      // Basic validation for Egyptian phone number format
+      const phoneRegex = /^01[0-9]{9}$/;
+      if (!phoneRegex.test(phone)) {
+          message.textContent = 'صيغة رقم الموبايل غير صحيحة (يجب أن تكون 11 رقم وتبدأ بـ 01).';
+          return;
+      }
+
+        // Frontend code validation is removed/commented out here.
+        // Backend (Apps Script) MUST perform the validation:
+        // - If current date <= 2025-04-30, allow access regardless of 'code'.
+        // - If current date > 2025-04-30, validate 'code' against your list.
+
+
+      // Disable button and show loading state
+      loginButton.disabled = true;
+      loginButton.classList.add('loading');
+      message.textContent = 'جاري التحقق...';
+      message.className = 'message info';
+
+
+      // *** Your Google Apps Script URL goes here ***
+      const scriptURL = `https://script.google.com/macros/s/AKfycbzguaT2q6Sj0dekHoKG5H-RHPW_IWyE-7M61vixtIIUHRs1bFfOfMDRphu4xwDsIA3v/exec?phone=${encodeURIComponent(phone)}&code=${encodeURIComponent(code)}`;
+
+      try {
+        // Using GET method as per the original setup
+        const response = await fetch(scriptURL);
+
+        // Check HTTP status first
+        if (!response.ok) {
+            let errorData = { message: `فشل الاتصال بالخادم (خطأ ${response.status})` };
+            try {
+                const errorJson = await response.json();
+                if (errorJson && errorJson.message) {
+                    errorData.message = errorJson.message;
+                }
+            } catch (e) {
+                console.error("Response wasn't JSON or failed to parse: ", e);
+            }
+            throw new Error(errorData.message);
+        }
+
+        // Parse the JSON data
+        const data = await response.json();
+
+        if (data.status === "success" && data.gpt) {
+          message.textContent = 'تم التحقق بنجاح، جاري تحويلك الآن...';
+          message.className = 'message success';
+          // Redirect after a short delay
+          setTimeout(() => {
+            try {
+                window.location.href = data.gpt;
+            } catch (redirectError) {
+                console.error("Redirection failed: ", redirectError);
+                message.textContent = 'فشل التحويل التلقائي. حاول تحديث الصفحة.';
+                message.className = 'message';
+                loginButton.disabled = false;
+                loginButton.classList.remove('loading');
+            }
+          }, 1500);
+
+        } else {
+          // Use the message from the backend response if status is not 'success'
+           throw new Error(data.message || 'فشل التحقق. استجابة غير متوقعة من الخادم.');
+        }
+
+      } catch (error) {
+        console.error('Error during fetch or processing:', error);
+        message.textContent = error.message || 'حدث خطأ. برجاء المحاولة مرة أخرى لاحقًا.';
+        message.className = 'message';
+
+        // Re-enable button only after error
+        loginButton.disabled = false;
+        loginButton.classList.remove('loading');
+      }
+    }
+  </script>
+</body>
+</html>
